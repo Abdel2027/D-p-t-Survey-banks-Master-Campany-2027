@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L'IA dans le secteur bancaire — Questionnaire</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --card:#ffffff; --text:#1f2430; --muted:#6b7280;
+    --border:#e2e5ea; --accent:#2e5395; --accent-soft:#eef2f9;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){ --bg:#15171c; --card:#1d2027; --text:#e8eaee; --muted:#9aa1ad; --border:#2b2f38; --accent:#7fa3e0; --accent-soft:#232a3a; }
+  }
+  :root[data-theme="dark"]{ --bg:#15171c; --card:#1d2027; --text:#e8eaee; --muted:#9aa1ad; --border:#2b2f38; --accent:#7fa3e0; --accent-soft:#232a3a; }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+  .topbar{position:sticky;top:0;padding:12px 16px calc(12px + env(safe-area-inset-top,0px));background:var(--bg);border-bottom:1px solid var(--border);z-index:10;}
+  .btnrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:720px;margin:0 auto;}
+  .navbtn{font-size:12.5px;padding:7px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;}
+  .navbtn:hover{background:var(--accent-soft);border-color:var(--accent);}
+  .navbtn.warn{color:#b3452c;}
+  .wrap{max-width:640px;margin:0 auto;padding:24px 16px 90px;}
+  .progress{font-size:13px;color:var(--muted);margin-bottom:6px;}
+  .intro{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+  .intro h1{font-size:19px;margin:0 0 12px;line-height:1.35;}
+  .intro p{font-size:14px;line-height:1.6;color:var(--muted);margin:0 0 12px;}
+  h2.sectitle{font-size:19px;margin:0 0 18px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px;}
+  .q-label{font-weight:600;margin-bottom:10px;font-size:14.5px;}
+  .choice{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:14px;}
+  .choice input{accent-color:var(--accent);flex:none;}
+  .helptext{font-size:12px;color:var(--muted);margin:-6px 0 10px;}
+  table.grid{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px;}
+  table.grid th{font-weight:500;color:var(--muted);padding:5px 3px;text-align:center;}
+  table.grid td{text-align:center;padding:5px 3px;border-top:1px solid var(--border);}
+  table.grid td:first-child{text-align:left;font-size:12.5px;padding-right:8px;}
+  input[type=radio]{accent-color:var(--accent);}
+  .subgrid-title{font-weight:500;font-size:13px;margin:14px 0 4px;color:var(--text);}
+  input[type=text],input[type=email],input[type=number]{width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;}
+  .footer-nav{display:flex;justify-content:space-between;max-width:640px;margin:20px auto 0;padding:0 16px;}
+  .footer-nav button{padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:14px;}
+  .footer-nav button.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .footer-nav button:disabled{opacity:.4;cursor:default;}
+  .thanks{max-width:520px;margin:80px auto;text-align:center;padding:0 16px;}
+  .thanks h1{font-size:22px;}
+  .thanks p{color:var(--muted);font-size:14px;line-height:1.6;}
+  .hidden{display:none !important;}
+  .banner{max-width:640px;margin:0 auto 16px;padding:10px 14px;border-radius:8px;background:var(--accent-soft);border:1px solid var(--accent);font-size:13px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="btnrow">
+    <button class="navbtn" id="btnCharger">Charger un questionnaire non terminé</button>
+    <button class="navbtn" id="btnPlusTard">Finir plus tard</button>
+    <button class="navbtn warn" id="btnEffacer">Sortir et effacer vos réponses</button>
+  </div>
+</div>
+
+<div class="wrap" id="viewForm">
+  <div id="banner"></div>
+  <div class="intro" id="intro">
+    <h1>L'IA, levier durable de performance et de différenciation dans le secteur bancaire</h1>
+    <p>Ce questionnaire s'inscrit dans le cadre d'un mémoire de Master en stratégie d'entreprise, consacré à la problématique suivante : dans quelle mesure l'intelligence artificielle peut-elle devenir un levier durable de performance et de différenciation pour l'entreprise dans le secteur bancaire ?</p>
+    <p>Il vous prendra environ 12 à 15 minutes. Vos réponses sont anonymes et ne seront exploitées que de manière agrégée, à des fins strictement académiques. Si vous le souhaitez, vous recevrez une synthèse des résultats de l'étude une fois celle-ci finalisée.</p>
+    <p>Nous vous remercions vivement pour votre contribution.</p>
+  </div>
+  <div class="progress" id="progress"></div>
+  <h2 class="sectitle" id="sectitle"></h2>
+  <div id="questions"></div>
+</div>
+
+<div class="footer-nav" id="footerNav">
+  <button id="btnPrev">Précédent</button>
+  <button class="primary" id="btnNext">Suivant</button>
+</div>
+
+<div class="thanks hidden" id="viewThanks">
+  <h1>Merci pour votre participation.</h1>
+  <p>Vos réponses ont bien été enregistrées.</p>
+</div>
+
+<script>
+// ===== CONFIGURATION =====
+// URL du déploiement "Application Web" du script Apps Script (se termine par /exec).
+// À remplacer après le déploiement — voir les instructions dans genererQuestionnaire.gs.
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzN3vZubDngOo1VwRvH0K5nJK7ou8yEzcnq40TuBXZdMhvUAn61ZAguXImvGELrqo0DKg/exec";
+
+const SCALE7 = ["1","2","3","4","5","6","7"];
+const SCALE7_NOTE = "1 = désaccord total · 7 = accord total";
+const SCALE5 = ["1","2","3","4","5"];
+const SCALE5_NOTE = "1 = jamais · 5 = très fréquemment";
+const SCALE08 = ["0","1","2","3","4","5","6","7"];
+const SCALE08_NOTE = "0 = nul/aucun · 7 = maximal";
+
+const PROCESSUS = [
+  "Ouverture de compte / entrée en relation (KYC)",
+  "Octroi de crédit (scoring, décision)",
+  "Détection de la fraude",
+  "Lutte contre le blanchiment (LCB-FT) / surveillance transactionnelle",
+  "Service client / réclamations",
+  "Recouvrement",
+  "Reporting réglementaire (COREP/FINREP, Bâle III/IV)",
+  "Gestion de portefeuille / conseil (robo-advisory)",
+  "Contrôle qualité et conformité documentaire des dossiers",
+  "Prévision de trésorerie / gestion actif-passif (ALM)",
+  "Cybersécurité / détection d'incidents",
+];
+
+// ===== MODÈLE DE DONNÉES DES 8 SECTIONS =====
+const SECTIONS = [
+{ title:"Section 1 sur 8 — Profil de l'établissement et du répondant", questions:[
+  { id:"q1", type:"radio", required:true, label:"Q1. Quel type d'établissement représentez-vous ?", options:["Banque de détail (réseau d'agences)","Banque de financement et d'investissement (BFI)","Banque privée / gestion de fortune","Néobanque / banque 100 % digitale","Établissement de paiement / fintech","Société de gestion d'actifs","Compagnie d'assurance / bancassurance","Autre"] },
+  { id:"q2", type:"radio", required:true, label:"Q2. Quel est l'effectif total de votre établissement (ou de votre filiale/entité en France) ?", options:["Moins de 50 salariés","De 50 à 250 salariés","De 251 à 1 000 salariés","De 1 001 à 5 000 salariés","Plus de 5 000 salariés"] },
+  { id:"q3", type:"radio", required:true, label:"Q3. Quelle fonction occupez-vous au sein de votre établissement ?", options:["Direction générale / Comex","Direction des systèmes d'information / technologique (DSI, CTO, CDO)","Direction des risques / conformité","Direction stratégie / innovation","Direction commerciale / marketing","Direction des ressources humaines","Autre"] },
+  { id:"q4", type:"radio", required:true, label:"Q4. Quel pourcentage approximatif de votre budget informatique annuel est consacré à des projets d'IA ?", help:"0 % est une réponse possible si aucun budget dédié n'existe.", options:["Moins de 5 %","Entre 5 et 10 %","Entre 11 et 20 %","Entre 21 et 40 %","Plus de 40 %"] },
+]},
+{ title:"Section 2 sur 8 — Maturité et diffusion de l'IA dans l'établissement", questions:[
+  { id:"q5", type:"number", label:"Q5. En quelle année votre établissement a-t-il déployé son premier cas d'usage d'IA en production (hors pilotes) ?" },
+  { id:"q6", type:"radio", required:true, label:"Q6. Dans combien de directions ou fonctions métier votre établissement a-t-il déployé au moins un cas d'usage d'IA en production ?", options:["Aucune (stade exploratoire uniquement)","1 à 2 directions","3 à 5 directions","Plus de 5 directions"] },
+  { id:"q7", type:"checkbox", label:"Q7. Parmi les domaines suivants, lesquels font l'objet d'un déploiement d'IA au sein de votre établissement ?", help:"Plusieurs réponses possibles.", options:["Scoring et octroi de crédit","Détection de la fraude","Lutte contre le blanchiment (LCB-FT) et conformité","Relation client (chatbots, agents conversationnels)","Conseil et personnalisation de l'offre (robo-advisory)","Gestion des risques de marché et de crédit","Trading algorithmique","Fonctions support internes (RH, juridique, finance)","Cybersécurité","Aucun de ces domaines"] },
+  { id:"q8", type:"grid", label:"Q8. Dans quelle mesure êtes-vous d'accord avec les affirmations suivantes concernant le niveau de maturité de votre établissement en matière d'IA ?", scale:SCALE7, note:SCALE7_NOTE, rows:[
+    "Notre établissement dispose d'une stratégie IA formalisée et validée par la direction générale",
+    "Notre établissement dispose d'une gouvernance des données structurée (qualité, disponibilité, traçabilité)",
+    "Nos collaborateurs disposent des compétences nécessaires pour exploiter les outils d'IA mis à leur disposition",
+    "Notre établissement dispose d'une fonction ou d'un comité dédié à l'éthique et à la gouvernance de l'IA",
+    "Notre établissement mesure formellement le retour sur investissement de ses projets d'IA",
+  ]},
+]},
+{ title:"Section 3 sur 8 — L'IA comme source de création de valeur", questions:[
+  { id:"q9", type:"grid", label:"Q9. Effets de l'IA sur la productivité", scale:SCALE7, note:SCALE7_NOTE, rows:[
+    "L'IA a permis de réduire significativement le temps de traitement des tâches répétitives",
+    "L'IA a permis à nos collaborateurs de se recentrer sur des tâches à plus forte valeur ajoutée",
+    "Les gains de productivité liés à l'IA sont plus marqués chez les collaborateurs les moins expérimentés",
+    "Les coûts de vérification et de correction liés à l'usage de l'IA compensent en partie les gains de temps obtenus",
+  ]},
+  { id:"q10", type:"grid", label:"Q10. Effets de l'IA sur l'optimisation des processus", scale:SCALE7, note:SCALE7_NOTE, rows:[
+    "L'IA a permis d'améliorer la détection de la fraude et des transactions suspectes",
+    "L'IA a permis de fluidifier et d'accélérer les processus d'octroi de crédit",
+    "L'IA a permis de réduire les coûts de conformité réglementaire (LCB-FT, reporting)",
+    "L'IA a permis une reconfiguration en profondeur de nos processus internes, au-delà d'une simple automatisation ponctuelle",
+  ]},
+  { id:"q11", type:"grid", label:"Q11. Effets de l'IA sur l'aide à la décision", scale:SCALE7, note:SCALE7_NOTE, rows:[
+    "L'IA améliore la qualité des décisions de crédit et de gestion des risques",
+    "Les recommandations issues de l'IA sont correctement interprétées et challengées par les décideurs humains",
+    "Notre établissement dispose de garde-fous efficaces contre un excès de confiance dans les recommandations algorithmiques",
+    "L'IA nous permet d'exploiter des données que nous n'étions pas en mesure d'analyser auparavant",
+  ]},
+]},
+{ title:"Section 4 sur 8 — Priorisation des processus bancaires pour l'IA", questions:[
+  { id:"q12", type:"multigrid", label:"Q12. Pour chacun des processus suivants, indiquez votre évaluation sur une échelle de 0 à 7.", note:SCALE08_NOTE, scale:SCALE08, subgrids:[
+    { key:"q12a", title:"Maturité IA actuelle", rows:PROCESSUS },
+    { key:"q12b", title:"Potentiel de gain perçu", rows:PROCESSUS },
+    { key:"q12c", title:"Criticité réglementaire perçue", rows:PROCESSUS },
+    { key:"q12d", title:"Priorité stratégique", rows:PROCESSUS },
+  ]},
+]},
+{ title:"Section 5 sur 8 — Différenciation concurrentielle et durabilité de l'avantage", questions:[
+  { id:"q13", type:"grid", label:"Q13. Différenciation apportée par l'IA", scale:SCALE7, note:SCALE7_NOTE, rows:[
+    "L'IA nous permet de proposer une expérience client difficile à reproduire par nos concurrents",
+    "Nos concurrents directs disposent de capacités d'IA globalement équivalentes aux nôtres",
+    "Notre avantage lié à l'IA repose principalement sur des données propriétaires difficilement accessibles à nos concurrents",
+    "L'avantage concurrentiel procuré par l'IA nous semble amené à s'éroder rapidement à mesure que les outils se banalisent",
+    "Notre établissement est reconnu par le marché comme un acteur innovant en matière d'IA",
+  ]},
+  { id:"q14", type:"radio", required:true, label:"Q14. Sur les 3 dernières années, sur combien de nouveaux cas d'usage d'IA à fort impact métier votre établissement s'est-il positionné ?", options:["Aucun","1 à 2","3 à 5","6 à 10","Plus de 10"] },
+  { id:"q15", type:"checkbox", maxSelect:3, label:"Q15. Quels facteurs jugez-vous les plus déterminants pour transformer l'IA en avantage concurrentiel durable ?", help:"Sélectionnez au maximum 3 facteurs.", options:["La qualité et l'exclusivité des données internes","Les compétences et la culture data des équipes","La rapidité d'intégration organisationnelle des outils","Le soutien et l'engagement de la direction générale","Le cadre de gouvernance et de gestion des risques liés à l'IA","Le montant des investissements technologiques","Les partenariats avec des éditeurs ou fournisseurs technologiques"] },
+]},
+{ title:"Section 6 sur 8 — Risques, gouvernance et conformité", questions:[
+  { id:"q16", type:"grid", label:"Q16. Risques liés à l'IA dans votre établissement", scale:SCALE7, note:SCALE7_NOTE, rows:[
+    "Notre établissement dispose d'une cartographie des risques liés à l'IA (biais algorithmique, explicabilité, cybersécurité)",
+    "Le risque de biais discriminatoire dans les modèles de scoring est correctement maîtrisé",
+    "Notre établissement est en mesure d'expliquer une décision individuelle prise ou assistée par un système d'IA",
+    "La mise en conformité avec le règlement européen sur l'IA (AI Act) représente une charge significative pour notre établissement",
+    "Le cadre réglementaire constitue davantage un frein qu'un accélérateur pour l'innovation en matière d'IA",
+  ]},
+  { id:"q17", type:"grid", label:"Q17. Fréquence de recours aux dispositifs suivants pour encadrer l'IA", scale:SCALE5, note:SCALE5_NOTE, rows:[
+    "Comité d'éthique ou de gouvernance dédié à l'IA",
+    "Audit indépendant des modèles algorithmiques",
+    "Formation des collaborateurs aux risques et limites de l'IA",
+    "Dispositif de supervision humaine systématique des décisions automatisées à enjeu (crédit, conformité)",
+  ]},
+]},
+{ title:"Section 7 sur 8 — Ressources et compétences organisationnelles", questions:[
+  { id:"q18", type:"grid", label:"Q18. Ressources et compétences", scale:SCALE7, note:SCALE7_NOTE, rows:[
+    "Notre établissement a la capacité à identifier de nouveaux cas d'usage d'IA à forte valeur ajoutée",
+    "Notre établissement a la capacité à faire évoluer rapidement ses processus pour intégrer de nouveaux outils d'IA",
+    "Notre établissement dispose de talents rares (data scientists, ingénieurs IA) difficiles à recruter et à retenir",
+    "Notre établissement collabore efficacement avec des start-up ou éditeurs spécialisés en IA",
+    "La culture managériale de notre établissement favorise l'expérimentation et l'acceptation de l'erreur",
+  ]},
+]},
+{ title:"Section 8 sur 8 — Performance globale perçue", questions:[
+  { id:"q19", type:"grid", label:"Q19. Résultats par rapport aux objectifs fixés (3 dernières années)", scale:SCALE7, note:SCALE7_NOTE, rows:[
+    "Rentabilité globale (marge, rendement des capitaux propres)",
+    "Croissance du produit net bancaire",
+    "Satisfaction et fidélisation de la clientèle",
+    "Maîtrise des coûts opérationnels",
+    "Réduction des pertes liées à la fraude ou au risque de crédit",
+  ]},
+  { id:"q20", type:"radio", required:true, label:"Q20. L'IA a-t-elle eu, à ce jour, un effet positif sur la performance globale de votre établissement ?", options:["Effet très négatif","Effet plutôt négatif","Effet neutre / pas d'effet identifiable","Effet plutôt positif","Effet très positif","Il est encore trop tôt pour se prononcer"] },
+  { id:"q21", type:"radio", required:true, label:"Q21. À horizon 5 ans, l'IA deviendra-t-elle un facteur déterminant de différenciation entre établissements bancaires ?", options:["Pas du tout déterminant","Peu déterminant","Modérément déterminant","Déterminant","Très déterminant, facteur de survie concurrentielle"] },
+  { id:"email", type:"email", label:"Adresse e-mail (facultatif) — pour recevoir la synthèse des résultats", help:"Cette information sera dissociée de vos réponses et ne sera utilisée qu'à cette seule fin." },
+]},
+];
+
+// ===== ÉTAT =====
+let current = 0;
+let answers = {};
+let sessionCode = null;
+
+function genCode(){ return Math.random().toString(36).slice(2,8).toUpperCase(); }
+
+function renderGrid(q){
+  let html = '<div class="card"><div class="q-label">'+q.label+'</div>';
+  if(q.note) html += '<div class="helptext">'+q.note+'</div>';
+  html += '<table class="grid"><tr><th style="text-align:left"></th>'+q.scale.map(function(s){return '<th>'+s+'</th>';}).join('')+'</tr>';
+  q.rows.forEach(function(rowLabel,ri){
+    const name = q.id+'_r'+ri;
+    html += '<tr><td>'+rowLabel+'</td>'+q.scale.map(function(_,ci){
+      const checked = answers[name]===String(ci) ? 'checked':'';
+      return '<td><input type="radio" name="'+name+'" value="'+ci+'" '+checked+' onchange="setAns(\''+name+'\',this.value)"></td>';
+    }).join('')+'</tr>';
+  });
+  html += '</table></div>';
+  return html;
+}
+
+function renderMultigrid(q){
+  let html = '<div class="card"><div class="q-label">'+q.label+'</div>';
+  if(q.note) html += '<div class="helptext">'+q.note+'</div>';
+  q.subgrids.forEach(function(sg){
+    html += '<div class="subgrid-title">'+sg.title+'</div>';
+    html += '<table class="grid"><tr><th style="text-align:left"></th>'+q.scale.map(function(s){return '<th>'+s+'</th>';}).join('')+'</tr>';
+    sg.rows.forEach(function(rowLabel,ri){
+      const name = sg.key+'_r'+ri;
+      html += '<tr><td>'+rowLabel+'</td>'+q.scale.map(function(_,ci){
+        const checked = answers[name]===String(ci) ? 'checked':'';
+        return '<td><input type="radio" name="'+name+'" value="'+ci+'" '+checked+' onchange="setAns(\''+name+'\',this.value)"></td>';
+      }).join('')+'</tr>';
+    });
+    html += '</table>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderQuestion(q){
+  if(q.type==='grid') return renderGrid(q);
+  if(q.type==='multigrid') return renderMultigrid(q);
+  let html = '<div class="card"><div class="q-label">'+q.label+'</div>';
+  if(q.help) html += '<div class="helptext">'+q.help+'</div>';
+  if(q.type==='radio'){
+    q.options.forEach(function(opt){
+      const checked = answers[q.id]===opt ? 'checked':'';
+      html += '<label class="choice"><input type="radio" name="'+q.id+'" value="'+opt+'" '+checked+' onchange="setAns(\''+q.id+'\',this.value)"> '+opt+'</label>';
+    });
+  } else if(q.type==='checkbox'){
+    const sel = answers[q.id] || [];
+    q.options.forEach(function(opt,oi){
+      const checked = sel.indexOf(opt)>-1 ? 'checked':'';
+      html += '<label class="choice"><input type="checkbox" data-qid="'+q.id+'" value="'+opt+'" '+checked+' onchange="toggleCheck(\''+q.id+'\',this,'+(q.maxSelect||0)+')"> '+opt+'</label>';
+    });
+  } else if(q.type==='number'){
+    html += '<input type="number" value="'+(answers[q.id]||'')+'" oninput="setAns(\''+q.id+'\',this.value)">';
+  } else if(q.type==='email'){
+    html += '<input type="email" value="'+(answers[q.id]||'')+'" oninput="setAns(\''+q.id+'\',this.value)">';
+  }
+  html += '</div>';
+  return html;
+}
+
+function setAns(key,val){ answers[key]=val; }
+
+function toggleCheck(qid,el,maxSelect){
+  let sel = answers[qid] || [];
+  if(el.checked){
+    if(maxSelect && sel.length>=maxSelect){ el.checked=false; alert('Maximum '+maxSelect+' réponses pour cette question.'); return; }
+    sel.push(el.value);
+  } else {
+    sel = sel.filter(function(v){return v!==el.value;});
+  }
+  answers[qid]=sel;
+}
+
+function render(){
+  document.getElementById('intro').classList.toggle('hidden', current!==0);
+  document.getElementById('progress').textContent = SECTIONS[current].title.split(' — ')[0];
+  document.getElementById('sectitle').textContent = SECTIONS[current].title.split(' — ')[1];
+  document.getElementById('questions').innerHTML = SECTIONS[current].questions.map(renderQuestion).join('');
+  document.getElementById('btnPrev').disabled = current===0;
+  document.getElementById('btnNext').textContent = current===SECTIONS.length-1 ? 'Envoyer' : 'Suivant';
+  window.scrollTo(0,0);
+}
+
+function requiredMissing(){
+  const missing = [];
+  SECTIONS[current].questions.forEach(function(q){
+    if(q.required && !answers[q.id]) missing.push(q.label);
+  });
+  return missing;
+}
+
+document.getElementById('btnNext').onclick = function(){
+  const missing = requiredMissing();
+  if(missing.length){ alert('Merci de répondre à la question obligatoire avant de continuer.'); return; }
+  if(current < SECTIONS.length-1){ current++; render(); saveLocal(); }
+  else { submit(); }
+};
+document.getElementById('btnPrev').onclick = function(){ if(current>0){ current--; render(); } };
+
+function saveLocal(){
+  if(!sessionCode) sessionCode = genCode();
+  localStorage.setItem('quest_'+sessionCode, JSON.stringify({answers:answers,current:current}));
+  return sessionCode;
+}
+
+document.getElementById('btnPlusTard').onclick = function(){
+  const code = saveLocal();
+  document.getElementById('banner').innerHTML = '<div class="banner">Votre progression est enregistrée sur cet appareil. Code à conserver pour reprendre : <strong>'+code+'</strong></div>';
+};
+
+document.getElementById('btnCharger').onclick = function(){
+  const code = prompt('Entrez le code de session à charger (fourni via "Finir plus tard") :');
+  if(!code) return;
+  const raw = localStorage.getItem('quest_'+code.trim().toUpperCase());
+  if(!raw){ alert("Aucune session trouvée pour ce code sur cet appareil.\n\nRemarque : la reprise ne fonctionne que depuis le même navigateur/appareil que celui utilisé pour \"Finir plus tard\"."); return; }
+  const data = JSON.parse(raw);
+  answers = data.answers; current = data.current; sessionCode = code.trim().toUpperCase();
+  render();
+};
+
+document.getElementById('btnEffacer').onclick = function(){
+  if(!confirm('Effacer toutes vos réponses et recommencer ?')) return;
+  if(sessionCode) localStorage.removeItem('quest_'+sessionCode);
+  answers = {}; current = 0; sessionCode = null;
+  document.getElementById('banner').innerHTML = '';
+  render();
+};
+
+function questionCode(label){
+  const m = label.match(/^Q[0-9A-Za-z]+/);
+  return m ? m[0] : label;
+}
+
+// Reconstruit un objet { "texte lisible de la question" : "réponse" } à partir
+// des réponses internes (stockées sous des identifiants courts type q8_r0),
+// afin que la feuille Google Sheets reçoive des en-têtes de colonnes lisibles
+// (le texte de la question, et pour les grilles le texte de la ligne) plutôt
+// que des identifiants techniques.
+function buildReadablePayload(){
+  const payload = {};
+  SECTIONS.forEach(function(section){
+    section.questions.forEach(function(q){
+      if(q.type==='grid'){
+        const code = questionCode(q.label);
+        q.rows.forEach(function(rowLabel,ri){
+          const key = q.id+'_r'+ri;
+          payload[code+' — '+rowLabel] = answers[key] !== undefined ? answers[key] : '';
+        });
+      } else if(q.type==='multigrid'){
+        const code = questionCode(q.label);
+        q.subgrids.forEach(function(sg){
+          sg.rows.forEach(function(rowLabel,ri){
+            const key = sg.key+'_r'+ri;
+            payload[code+' ('+sg.title+') — '+rowLabel] = answers[key] !== undefined ? answers[key] : '';
+          });
+        });
+      } else if(q.type==='checkbox'){
+        payload[q.label] = (answers[q.id]||[]).join(' ; ');
+      } else {
+        payload[q.label] = answers[q.id] !== undefined ? answers[q.id] : '';
+      }
+    });
+  });
+  return payload;
+}
+
+function submit(){
+  const payload = buildReadablePayload();
+  if(WEBAPP_URL.indexOf('https://script.google.com/macros/s/AKfycbzN3vZubDngOo1VwRvH0K5nJK7ou8yEzcnq40TuBXZdMhvUAn61ZAguXImvGELrqo0DKg/exec') === -1){
+    fetch(WEBAPP_URL, { method:'POST', mode:'no-cors', body: JSON.stringify(payload) }).catch(function(){});
+  }
+  if(sessionCode) localStorage.removeItem('quest_'+sessionCode);
+  document.getElementById('viewForm').classList.add('hidden');
+  document.getElementById('footerNav').classList.add('hidden');
+  document.getElementById('viewThanks').classList.remove('hidden');
+}
+
+render();
+</script>
+</body>
+</html>
