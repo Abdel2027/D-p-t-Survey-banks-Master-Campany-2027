@@ -382,10 +382,18 @@ function buildReadablePayload(){
 
 function submit(){
   const payload = buildReadablePayload();
-  if(WEBAPP_URL.indexOf('https://script.google.com/macros/s/AKfycbzN3vZubDngOo1VwRvH0K5nJK7ou8yEzcnq40TuBXZdMhvUAn61ZAguXImvGELrqo0DKg/exec') === -1){
-    fetch(WEBAPP_URL, { method:'POST', mode:'no-cors', body: JSON.stringify(payload) }).catch(function(){});
-  }
+  
+  // 1. Envoi direct des données sans condition de blocage
+  fetch(WEBAPP_URL, { 
+    method: 'POST', 
+    mode: 'no-cors', 
+    body: JSON.stringify(payload) 
+  }).catch(function(err){ console.error("Erreur d'envoi :", err); });
+
+  // 2. Nettoyage du stockage local
   if(sessionCode) localStorage.removeItem('quest_'+sessionCode);
+  
+  // 3. Masquage du formulaire et affichage du message de remerciement
   document.getElementById('viewForm').classList.add('hidden');
   document.getElementById('footerNav').classList.add('hidden');
   document.getElementById('viewThanks').classList.remove('hidden');
